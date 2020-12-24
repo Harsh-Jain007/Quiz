@@ -1,0 +1,67 @@
+from colorama import Fore,Style,Back
+from data import *
+
+def show_rules():
+    print(Fore.CYAN + Style.BRIGHT + Back.WHITE)
+    print(' RULES '.center(70,'-'))
+    print(Style.RESET_ALL+Back.BLUE)
+    print('1. Enter your name.')
+    print('2. Enter option number.')
+    print('3. 1 point for one correct answer.')
+    print(Style.RESET_ALL)
+
+def check_answer(actual,given):
+    global points
+    if actual==given:
+        print(Fore.GREEN + 'Correct answer.')
+        points+=1
+    else:
+        print(Fore.RED + 'Incorrect answer.')    
+    print(Style.RESET_ALL)
+
+points=0
+
+
+categories = [marvel, sports, food]
+show_rules() 
+name=input('\nEnter your name: ')
+
+i='y'
+while i=='y' or i=='Y':
+    print('Choose a Category:\n\t1 for questions related to Marvel Universe\n\t2 for question related to sports\n\t3 for questions related to food ')
+    choice=int(input(': ')) 
+
+    if choice < 1 or choice > 3:
+        print('Invalid Input.')            
+    else:
+        questionList = categories[choice-1]
+        
+        for i in range(len(questionList)):
+            ques = questionList[i]['question']
+            options = questionList[i]['options']
+            answer = questionList[i]['answer']
+
+            print('\nQ {}: {}'.format(i+1,ques), end = '\n\n')
+
+            for j in range(len(options)):
+                # print(j+1,options[j], sep='. ')
+                print('[{}] {}'.format(j+1,options[j]))
+
+            print(Fore.YELLOW + Style.BRIGHT)
+            user = int(input(': ')) - 1
+            print(Back.WHITE + Fore.BLUE + ' {} '.format(options[user]) + Style.RESET_ALL)
+
+            check_answer(answer,options[user])
+
+            print(Fore.BLUE + Style.BRIGHT + 'POINTS: {}'.format(points).rjust(70) + Style.RESET_ALL)
+
+        print(Back.MAGENTA + '\n {} your score: {} '.format(name,points)+ Style.RESET_ALL)  
+
+    i=input('Want to answer more questions? (y/n): ')
+
+'''
+choice < 1
+1, 2, 3
+choice > 3
+'''
+
